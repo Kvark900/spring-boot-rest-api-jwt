@@ -10,5 +10,4 @@ public class BootifulApplication {
 		SpringApplication.run(BootifulApplication.class, args);
 	}
 
-
 }

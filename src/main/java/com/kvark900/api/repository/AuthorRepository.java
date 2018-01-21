@@ -1,5 +1,6 @@
-package com.kvark900.api.author.domain;
+package com.kvark900.api.repository;
 
+import com.kvark900.api.model.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

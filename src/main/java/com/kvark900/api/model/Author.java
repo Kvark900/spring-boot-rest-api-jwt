@@ -1,11 +1,12 @@
-package com.kvark900.api.author.domain;
+package com.kvark900.api.model;
 
-import com.kvark900.api.book.domain.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Keno&Kemo on 17.12.2017..
@@ -13,20 +14,32 @@ import java.util.List;
 @Entity
 public class Author {
     @Id
+    @GeneratedValue
     private Long id;
+    @NotNull
     private String name;
+    @NotNull
     private String surname;
 
-    @ManyToMany
-    private List<Book> books;
+//    @NotNull
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "authors")
+    private Set<Book> books = new HashSet<>();
 
-    public Author(Long id, String name, String surname, List<Book> books) {
+
+    //Constructors
+    @Autowired
+    public Author(Long id, String name, String surname, Set<Book> books) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.books = books;
     }
 
+    public Author() {
+    }
+
+    //getters and setters
     public String getName() {
         return name;
     }
@@ -43,11 +56,11 @@ public class Author {
         this.surname = surname;
     }
 
-    public List<Book> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<Book> books) {
+    public void setBooks(Set<Book> books) {
         this.books = books;
     }
 

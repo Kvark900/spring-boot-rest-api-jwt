@@ -1,7 +1,8 @@
-package com.kvark900.api.author.service;
+package com.kvark900.api.service;
 
-import com.kvark900.api.author.domain.Author;
-import com.kvark900.api.author.domain.AuthorRepository;
+import com.kvark900.api.model.Author;
+import com.kvark900.api.repository.AuthorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +12,13 @@ import java.util.List;
  */
 @Service
 public class AuthorService {
+
     private AuthorRepository authorRepository;
 
+    public AuthorService() {
+    }
+
+    @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
