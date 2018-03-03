@@ -47,8 +47,7 @@ public class AuthorController {
         else return new ResponseEntity<>(author, HttpStatus.OK);
     }
 
-    @PostMapping(value = "",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping("")
     public ResponseEntity<Author> saveAuthor(@RequestBody @Valid Author author, BindingResult bindingResult,
                                          UriComponentsBuilder uriComponentsBuilder){
         BindingErrorsResponse errors = new BindingErrorsResponse();

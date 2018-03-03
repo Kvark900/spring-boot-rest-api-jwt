@@ -45,8 +45,7 @@ public class BookController {
         else return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @PostMapping (value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping ("")
     public ResponseEntity<Book> saveBook(@RequestBody @Valid Book book, BindingResult bindingResult,
                                          UriComponentsBuilder uriComponentsBuilder){
         BindingErrorsResponse errors = new BindingErrorsResponse();

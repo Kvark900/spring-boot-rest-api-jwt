@@ -24,8 +24,7 @@ public class TopicController {
     }
 
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping("")
     public ResponseEntity<List<Topic>> getAllTopics(){
         List<Topic> allTopics = topicService.findAll();
         if(allTopics == null){
@@ -46,8 +45,7 @@ public class TopicController {
         else return new ResponseEntity<>(topic, HttpStatus.OK);
     }
 
-    @PostMapping (value = "",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping ("")
     public ResponseEntity<Topic> addTopic(@RequestBody @Valid Topic topic, BindingResult bindingResult,
                                                 UriComponentsBuilder uriComponentsBuilder){
         BindingErrorsResponse errors = new BindingErrorsResponse();
