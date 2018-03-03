@@ -42,7 +42,7 @@ public class TestControllers {
 
         List<Author> allAuthors = Collections.singletonList(author);
 
-        given(authorService.findAll()).willReturn();
+        given(authorService.findAll()).willReturn(allAuthors);
 
         mockMvc.perform(get("/authors")
                 .contentType(MediaType.APPLICATION_JSON))
