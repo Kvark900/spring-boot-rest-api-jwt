@@ -1,6 +1,7 @@
 package com.kvark900;
 
 import com.kvark900.api.controller.AuthorController;
+import com.kvark900.api.model.Author;
 import com.kvark900.api.service.AuthorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,10 +36,17 @@ public class TestControllers {
 
     @Test
     public void testController() throws Exception{
+        Author author = new Author();
+        author.setName("Richard");
+        author.setSurname("Feynman");
+
+        List<Author> allAuthors = Collections.singletonList(author);
+
+        given(authorService.findAll()).willReturn();
+
         mockMvc.perform(get("/authors")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
     }
 
 
