@@ -35,8 +35,7 @@ public class BookController {
         else return new ResponseEntity<>(allBooks, HttpStatus.OK);
     }
 
-    @GetMapping (value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping ("/{id}")
     public ResponseEntity<Book> getBook(@PathVariable Long id){
         Book book = bookService.findById(id);
         if(book == null){
