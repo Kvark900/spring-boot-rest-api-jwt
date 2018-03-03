@@ -19,6 +19,7 @@ public class Topic {
     private String name;
 
     @NotNull
+    @Lob
     private String description;
 
     @JsonIgnore

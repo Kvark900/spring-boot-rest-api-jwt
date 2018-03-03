@@ -24,6 +24,8 @@ public class Book {
     private Set<Author> authors = new HashSet<>();
 
     private String yearOfPublication;
+
+    @Lob
     private String description;
 
     @NotNull

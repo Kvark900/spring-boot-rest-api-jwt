@@ -31,6 +31,10 @@ public class AuthorService {
         return authorRepository.findOne(id);
     }
 
+    public Author findByNameAndSurname(String name, String surname){
+        return authorRepository.findByNameAndSurnameAllIgnoreCase(name, surname);
+    }
+
     public void save(Author author){
         authorRepository.save(author);
     }

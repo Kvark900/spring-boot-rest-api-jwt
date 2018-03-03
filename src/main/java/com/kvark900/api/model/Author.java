@@ -29,11 +29,17 @@ public class Author {
 
     //Constructors
     @Autowired
-    public Author(Long id, String name, String surname, Set<Book> books) {
+    public Author(String name, String surname, Set<Book> books) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.books = books;
+    }
+    @Autowired
+    public Author(String name, String surname) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
     }
 
     public Author() {

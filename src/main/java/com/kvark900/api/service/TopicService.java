@@ -25,6 +25,8 @@ public class TopicService {
         return topicRepository.findOne(id);
     }
 
+    public Topic findByName (String name){return topicRepository.findByNameAllIgnoreCase(name);}
+
     public void save (Topic topic){
         topicRepository.save(topic);
     }

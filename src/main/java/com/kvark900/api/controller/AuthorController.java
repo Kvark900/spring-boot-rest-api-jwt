@@ -26,8 +26,7 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping("")
     public ResponseEntity<List<Author>> getAllAuthors(){
         List<Author> allAuthors = authorService.findAll();
         if(allAuthors == null){
