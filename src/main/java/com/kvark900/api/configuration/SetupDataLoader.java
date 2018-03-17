@@ -52,7 +52,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         //endregion
 
 
-
         //region Topics
         //===============================================================================
         Topic computerProgramming = createTopicIfNotFound("Computer programming", "Computer programming books");
@@ -63,7 +62,6 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Topic algorithmsDataStructures = createTopicIfNotFound("Data Structures and Algorithms", "Data Structures and Algorithms  books");
         //===============================================================================
         //endregion
-
 
 
         //region Books
