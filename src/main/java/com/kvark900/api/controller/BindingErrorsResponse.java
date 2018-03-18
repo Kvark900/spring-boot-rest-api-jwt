@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class BindingErrorsResponse {
-    private List<BindingError> bindingErrors = new ArrayList<BindingError>();
+    private List<BindingError> bindingErrors = new ArrayList<>();
 
     public List<BindingError> getBindingErrors() {
         return bindingErrors;
