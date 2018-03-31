@@ -46,11 +46,11 @@ public class BookController {
         else return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @GetMapping ("/by-topics-id/{topicIds}")
+    @GetMapping ("/by-topic-id/{topicIds}")
     public ResponseEntity<List<Book>> getAllBooksByTopicId(@PathVariable Long [] topicIds){
         List<Book> allBooksByTopicId = new ArrayList<>();
          for (Long topicId : topicIds){
-            List<Book> booksByTopicId = bookService.findByTopicId(topicId);
+            List<Book> booksByTopicId = bookService.findByTopicsId(topicId);
             if(!booksByTopicId.isEmpty()){
                 allBooksByTopicId.addAll(booksByTopicId);
             }
@@ -61,6 +61,20 @@ public class BookController {
         else return new ResponseEntity<>(allBooksByTopicId, HttpStatus.OK);
     }
 
+    @GetMapping ("/by-author-id/{authorIds}")
+    public ResponseEntity<List<Book>> getAllBooksByAuthorId(@PathVariable Long [] authorIds){
+        List<Book> allBooksByAuthorId = new ArrayList<>();
+        for (Long authorId : authorIds){
+            List<Book> booksByAuthorId = bookService.findByAuthorsId(authorId);
+            if(!booksByAuthorId.isEmpty()){
+                allBooksByAuthorId.addAll(booksByAuthorId);
+            }
+        }
+        if(allBooksByAuthorId.isEmpty()){
+            return new ResponseEntity<>(allBooksByAuthorId, HttpStatus.NO_CONTENT);
+        }
+        else return new ResponseEntity<>(allBooksByAuthorId, HttpStatus.OK);
+    }
 
     @PostMapping ("")
     public ResponseEntity<Book> saveBook(@RequestBody @Valid Book book, BindingResult bindingResult,

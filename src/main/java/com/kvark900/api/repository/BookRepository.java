@@ -12,4 +12,5 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
     Book findByTitleAllIgnoreCase(String title);
     List<Book> findByTopicsId(Long id);
+    List<Book> findByAuthorsId(Long id);
 }
