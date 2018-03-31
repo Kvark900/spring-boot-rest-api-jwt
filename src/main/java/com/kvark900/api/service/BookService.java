@@ -29,6 +29,9 @@ public class BookService {
 
     public Book findByTitle (String title){return bookRepository.findByTitleAllIgnoreCase(title);}
 
+    public List<Book> findByTopicId (Long id){return bookRepository.findByTopicsId(id);}
+
+
     public void save(Book book){
         bookRepository.save(book);
     }

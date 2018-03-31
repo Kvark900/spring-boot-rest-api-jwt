@@ -16,7 +16,7 @@ public class Book {
     private String title;
 
     @NotNull
-    @ManyToMany(cascade = CascadeType.PERSIST, targetEntity = Author.class)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Author.class)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")

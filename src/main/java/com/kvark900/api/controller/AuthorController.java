@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by Keno&Kemo on 17.12.2017..
  */
+@SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping(value = "/authors", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
         consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

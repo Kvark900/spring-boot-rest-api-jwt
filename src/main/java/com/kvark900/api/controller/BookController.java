@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping(value = "/books", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
         consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -43,6 +45,22 @@ public class BookController {
         }
         else return new ResponseEntity<>(book, HttpStatus.OK);
     }
+
+    @GetMapping ("/by-topics-id/{topicIds}")
+    public ResponseEntity<List<Book>> getAllBooksByTopicId(@PathVariable Long [] topicIds){
+        List<Book> allBooksByTopicId = new ArrayList<>();
+         for (Long topicId : topicIds){
+            List<Book> booksByTopicId = bookService.findByTopicId(topicId);
+            if(!booksByTopicId.isEmpty()){
+                allBooksByTopicId.addAll(booksByTopicId);
+            }
+        }
+        if(allBooksByTopicId.isEmpty()){
+            return new ResponseEntity<>(allBooksByTopicId, HttpStatus.NO_CONTENT);
+        }
+        else return new ResponseEntity<>(allBooksByTopicId, HttpStatus.OK);
+    }
+
 
     @PostMapping ("")
     public ResponseEntity<Book> saveBook(@RequestBody @Valid Book book, BindingResult bindingResult,

@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 @RestController
 @RequestMapping (value = "/topics",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
         consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -56,7 +57,7 @@ public class TopicController {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
         else{
-        topicService.save(topic);
+            topicService.save(topic);
             headers.setLocation(uriComponentsBuilder.path("/books/{id}").
                     buildAndExpand(topic.getId()).toUri());
             return new ResponseEntity<>(topic, headers, HttpStatus.CREATED);

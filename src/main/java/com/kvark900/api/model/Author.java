@@ -23,7 +23,7 @@ public class Author {
 
 //    @NotNull
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "authors")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 
 
@@ -35,6 +35,7 @@ public class Author {
         this.surname = surname;
         this.books = books;
     }
+
     @Autowired
     public Author(String name, String surname) {
         this.id = id;

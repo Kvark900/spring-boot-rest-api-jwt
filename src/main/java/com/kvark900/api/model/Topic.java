@@ -23,7 +23,7 @@ public class Topic {
     private String description;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Book.class, mappedBy = "topics")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Book.class, mappedBy = "topics")
     private Set<Book> books = new HashSet<>();
 
     //Constructors
