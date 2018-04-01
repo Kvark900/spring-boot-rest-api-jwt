@@ -19,8 +19,7 @@ public class Book {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Author.class)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
-            )
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
     private String yearOfPublication;
@@ -32,8 +31,7 @@ public class Book {
     @ManyToMany(cascade = CascadeType.PERSIST, targetEntity = Topic.class)
     @JoinTable(name = "book_topic",
             joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "topic_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private Set<Topic> topics = new HashSet<>();
 
     //Constructors
@@ -68,9 +66,6 @@ public class Book {
     }
     public void setTitle(String title) {
         this.title = title;
-    }
-    public Set<Author> getAuthor() {
-        return authors;
     }
     public String getYearOfPublication() {
         return yearOfPublication;

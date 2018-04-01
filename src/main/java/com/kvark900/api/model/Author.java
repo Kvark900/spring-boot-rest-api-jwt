@@ -23,7 +23,7 @@ public class Author {
 
 //    @NotNull
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "authors")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Book.class, mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 
 
