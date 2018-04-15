@@ -4,7 +4,6 @@ import com.kvark900.api.model.Topic;
 import com.kvark900.api.service.TopicService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,7 @@ import java.util.List;
 
 @SuppressWarnings("Duplicates")
 @RestController
-@RequestMapping (value = "/topics",produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-        consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping (value = "/topics")
 public class TopicController {
     private final TopicService topicService;
 
