@@ -1,5 +1,6 @@
-package com.kvark900.api.configuration;
+package com.kvark900.api.configuration.setupDataLoaders;
 
+import com.kvark900.api.configuration.security.user.*;
 import com.kvark900.api.model.Author;
 import com.kvark900.api.model.Book;
 import com.kvark900.api.model.Topic;
@@ -11,21 +12,21 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Keno&Kemo on 03.03.2018..
  */
 @Component
-public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
+public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private boolean alreadySetup = false;
     private BookService bookService;
     private AuthorService authorService;
     private TopicService topicService;
 
-    public SetupDataLoader(BookService bookService, AuthorService authorService, TopicService topicService) {
+
+    public TopicsAuthorsBooksLoader(BookService bookService, AuthorService authorService, TopicService topicService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.topicService = topicService;
@@ -35,9 +36,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     @Transactional
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-        if (alreadySetup) {
-            return;
-        }
+        if (alreadySetup) return;
 
         //region Authors
         //===============================================================================
@@ -190,4 +189,5 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             bookService.save(book);
         }
     }
+
 }
