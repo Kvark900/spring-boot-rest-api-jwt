@@ -12,6 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -84,8 +85,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
                             " structures to polynomial-time algorithms for seemingly intractable problems, from " +
                             "classical algorithms in graph theory to special" +
                             " algorithms for string matching, computational geometry, and number theory.",
-                    topicsIntroductionToAlgorithms
-                    );
+                    topicsIntroductionToAlgorithms, new BigDecimal(100.17));
             //===============================================================================
             //endregion
 
@@ -104,7 +104,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
                     "Cracking the Coding Interview: 150 Programming Questions and Solutions 4th Edtion",
                     authorsCrackingTheCodingInterview, "2010", "Cracking the Coding Interview " +
                     "gives you the interview preparation you need to get the top software developer jobs.",
-                    topicsCrackingTheCodingInterview);
+                    topicsCrackingTheCodingInterview, new BigDecimal(100));
 
             //===============================================================================
             //endregion
@@ -125,7 +125,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
                     "Head First Java", authorsHeadFirstJava, "2005",
                     "By exploiting how your brain works, Head First Java compresses the time it takes to " +
                     "learn and retain--complex information. Its unique approach not only shows you what you " +
-                    "need to know about Java syntax, it teaches you to think like a Java programmer.", topicsHeadFirstJava);
+                    "need to know about Java syntax, it teaches you to think like a Java programmer.", topicsHeadFirstJava, new BigDecimal(60));
             //===============================================================================
             //endregion
 
@@ -142,7 +142,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
                     "Surely You're Joking, Mr. Feynman!: Adventures of a Curious Character", authorsSurelyYoureJokingMrFeynman,
                     "1985", "This is an edited collection of reminiscences by the Nobel Prize-winning" +
                     " physicist Richard Feynman. The book, released in 1985, covers a variety of instances in Feynman's life.",
-                    topicsSurelyYoureJokingMrFeynman);
+                    topicsSurelyYoureJokingMrFeynman, new BigDecimal(100));
             //===============================================================================
             //endregion
 
@@ -176,7 +176,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
     @Transactional
     private void createBookIfNotFound (String title, Set<Author> authors,
                                        String yearOfPublication, String description,
-                                       Set<Topic> topics) {
+                                       Set<Topic> topics, BigDecimal price) {
         Book book = bookService.findByTitle(title);
         if (book == null) {
             book = new Book();
@@ -185,6 +185,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
             book.setYearOfPublication(yearOfPublication);
             book.setDescription(description);
             book.setTopics(topics);
+            book.setPrice(price);
 
             bookService.save(book);
         }

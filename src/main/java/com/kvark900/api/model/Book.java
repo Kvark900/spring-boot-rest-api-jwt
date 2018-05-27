@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,15 +35,20 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "topic_id"))
     private Set<Topic> topics = new HashSet<>();
 
+    @NotNull
+    private BigDecimal price;
+
     //Constructors
     @Autowired
-    public Book(Long id, String title, Set<Author> author, String yearOfPublication, String description, Set<Topic> topics) {
+    public Book(Long id, String title, Set<Author> author, String yearOfPublication,
+                String description, Set<Topic> topics, BigDecimal price) {
         this.id = id;
         this.title = title;
         this.authors = author;
         this.yearOfPublication = yearOfPublication;
         this.description = description;
         this.topics = topics;
+        this.price = price;
     }
 
     public Book() {
@@ -73,7 +79,9 @@ public class Book {
     public void setYearOfPublication(String yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
     }
-    public Set<Author> getAuthors() {return authors;}
+    public Set<Author> getAuthors() {
+        return authors;
+    }
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
@@ -82,5 +90,11 @@ public class Book {
     }
     public void setTopics(Set<Topic> topics) {
         this.topics = topics;
+    }
+    public BigDecimal getPrice() {
+        return price;
+    }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
