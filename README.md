@@ -1,11 +1,11 @@
 # spring-boot-rest-api
-######Bookstore REST API with JWT authentication
+###### Bookstore REST API with JWT authentication
 
 ### Prerequisites
 - JDK 1.8+  
 - Maven
 
-###Technology stack:
+### Technology stack:
 * Spring Boot
 * Spring Data JPA
 * MySQL
