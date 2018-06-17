@@ -1,13 +1,17 @@
 package com.kvark900;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
+@Configuration
 public class BootifulApplication {
 
 	public static void main(String[] args) {
@@ -22,5 +26,11 @@ public class BootifulApplication {
 				registry.addMapping("/**").allowedOrigins("*");
 			}
 		};
+	}
+
+	@Bean
+	public Module hibernate4Module()
+	{
+		return new Hibernate4Module();
 	}
 }
