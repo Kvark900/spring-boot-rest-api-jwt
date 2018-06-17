@@ -4,10 +4,12 @@ import com.kvark900.api.model.Topic;
 import com.kvark900.api.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class TopicService {
     private final TopicRepository topicRepository;
 

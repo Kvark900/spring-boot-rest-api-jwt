@@ -1,8 +1,5 @@
 package com.kvark900.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -21,14 +18,13 @@ public class Author {
     @NotNull
     private String surname;
 
-//    @NotNull
-    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Book.class, mappedBy = "authors")
+    //@NotNull
+//    @JsonIgnore
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 
 
     //Constructors
-    @Autowired
     public Author(String name, String surname, Set<Book> books) {
         this.id = id;
         this.name = name;
@@ -36,7 +32,6 @@ public class Author {
         this.books = books;
     }
 
-    @Autowired
     public Author(String name, String surname) {
         this.id = id;
         this.name = name;

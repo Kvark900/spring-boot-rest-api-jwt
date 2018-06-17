@@ -4,6 +4,7 @@ import com.kvark900.api.model.Author;
 import com.kvark900.api.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * Created by Keno&Kemo on 17.12.2017..
  */
 @Service
+@Transactional
 public class AuthorService {
 
     private AuthorRepository authorRepository;

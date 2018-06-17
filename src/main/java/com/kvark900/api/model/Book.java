@@ -17,7 +17,7 @@ public class Book {
     private String title;
 
     @NotNull
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Author.class)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
@@ -58,42 +58,55 @@ public class Book {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getYearOfPublication() {
         return yearOfPublication;
     }
+
     public void setYearOfPublication(String yearOfPublication) {
         this.yearOfPublication = yearOfPublication;
     }
+
     public Set<Author> getAuthors() {
         return authors;
     }
+
     public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
+
     public Set<Topic> getTopics() {
         return topics;
     }
+
     public void setTopics(Set<Topic> topics) {
         this.topics = topics;
     }
+
     public BigDecimal getPrice() {
         return price;
     }
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
