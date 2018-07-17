@@ -34,7 +34,7 @@ public class BindingErrorsResponse {
             BindingError error = new BindingError();
             error.setObjectName(fieldError.getObjectName());
             error.setFieldName(fieldError.getField());
-//            error.setFieldValue(fieldError.getRejectedValue().toString());
+            error.setFieldValue(String.valueOf(fieldError.getRejectedValue()));
             error.setErrorMessage(fieldError.getDefaultMessage());
             addError(error);
         }

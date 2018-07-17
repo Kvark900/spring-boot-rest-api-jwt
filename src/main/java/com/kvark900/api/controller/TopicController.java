@@ -14,7 +14,7 @@ import java.util.List;
 
 @SuppressWarnings("Duplicates")
 @RestController
-@RequestMapping (value = "/topics")
+@RequestMapping(value = "/topics")
 public class TopicController {
     private final TopicService topicService;
 
@@ -24,37 +24,33 @@ public class TopicController {
 
 
     @GetMapping("")
-    public ResponseEntity<List<Topic>> getAllTopics(){
+    public ResponseEntity<List<Topic>> getAllTopics() {
         List<Topic> allTopics = topicService.findAll();
-        if(allTopics == null){
+        if (allTopics == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else if(allTopics.isEmpty()){
+        } else if (allTopics.isEmpty()) {
             return new ResponseEntity<>(allTopics, HttpStatus.NO_CONTENT);
-        }
-        else return new ResponseEntity<>(allTopics, HttpStatus.OK);
+        } else return new ResponseEntity<>(allTopics, HttpStatus.OK);
     }
 
-    @GetMapping ("/{id}")
-    public ResponseEntity<Topic> getTopic(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Topic> getTopic(@PathVariable Long id) {
         Topic topic = topicService.findById(id);
-        if(topic == null){
+        if (topic == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else return new ResponseEntity<>(topic, HttpStatus.OK);
+        } else return new ResponseEntity<>(topic, HttpStatus.OK);
     }
 
-    @PostMapping ("")
+    @PostMapping("")
     public ResponseEntity<Topic> addTopic(@RequestBody @Valid Topic topic, BindingResult bindingResult,
-                                                UriComponentsBuilder uriComponentsBuilder){
+                                          UriComponentsBuilder uriComponentsBuilder) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
-        if(bindingResult.hasErrors() || (topic == null)){
+        if (bindingResult.hasErrors() || (topic == null)) {
             errors.addAllErrors(bindingResult);
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
-        }
-        else{
+        } else {
             topicService.save(topic);
             headers.setLocation(uriComponentsBuilder.path("/books/{id}").
                     buildAndExpand(topic.getId()).toUri());
@@ -62,30 +58,29 @@ public class TopicController {
         }
     }
 
-    @DeleteMapping ("/{id}")
-    public ResponseEntity<Topic> deleteTopic(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Topic> deleteTopic(@PathVariable Long id) {
         Topic topicToDelete = topicService.findById(id);
-        if(topicToDelete == null){
+        if (topicToDelete == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
+        } else {
             topicService.delete(id);
             return new ResponseEntity<>(topicToDelete, HttpStatus.NO_CONTENT);
         }
     }
 
-    @PutMapping ("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Topic> updateTopic(@PathVariable Long id, @RequestBody @Valid Topic topic,
-                            BindingResult bindingResult){
+                                             BindingResult bindingResult) {
         Topic currentTopic = topicService.findById(id);
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
-        if(bindingResult.hasErrors() || (topic == null)){
+        if (bindingResult.hasErrors() || (topic == null)) {
             errors.addAllErrors(bindingResult);
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-        if(currentTopic == null){
+        if (currentTopic == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         topicService.update(topic);
