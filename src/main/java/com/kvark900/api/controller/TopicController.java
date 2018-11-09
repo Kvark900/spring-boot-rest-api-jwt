@@ -26,19 +26,19 @@ public class TopicController {
     @GetMapping("")
     public ResponseEntity<List<Topic>> getAllTopics() {
         List<Topic> allTopics = topicService.findAll();
-        if (allTopics == null) {
+        if (allTopics == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else if (allTopics.isEmpty()) {
+        else if (allTopics.isEmpty())
             return new ResponseEntity<>(allTopics, HttpStatus.NO_CONTENT);
-        } else return new ResponseEntity<>(allTopics, HttpStatus.OK);
+        return new ResponseEntity<>(allTopics, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Topic> getTopic(@PathVariable Long id) {
         Topic topic = topicService.findById(id);
-        if (topic == null) {
+        if (topic == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(topic, HttpStatus.OK);
+        return new ResponseEntity<>(topic, HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -50,12 +50,13 @@ public class TopicController {
             errors.addAllErrors(bindingResult);
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
-        } else {
-            topicService.save(topic);
-            headers.setLocation(uriComponentsBuilder.path("/books/{id}").
-                    buildAndExpand(topic.getId()).toUri());
-            return new ResponseEntity<>(topic, headers, HttpStatus.CREATED);
         }
+
+        topicService.save(topic);
+        headers.setLocation(uriComponentsBuilder.path("/books/{id}").
+                buildAndExpand(topic.getId()).toUri());
+        return new ResponseEntity<>(topic, headers, HttpStatus.CREATED);
+
     }
 
     @DeleteMapping("/{id}")
@@ -63,10 +64,9 @@ public class TopicController {
         Topic topicToDelete = topicService.findById(id);
         if (topicToDelete == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            topicService.delete(id);
-            return new ResponseEntity<>(topicToDelete, HttpStatus.NO_CONTENT);
         }
+        topicService.delete(id);
+        return new ResponseEntity<>(topicToDelete, HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
@@ -80,9 +80,8 @@ public class TopicController {
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-        if (currentTopic == null) {
+        if (currentTopic == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         topicService.update(topic);
         return new ResponseEntity<>(topic, HttpStatus.NO_CONTENT);
     }

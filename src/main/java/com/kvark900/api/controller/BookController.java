@@ -28,17 +28,21 @@ public class BookController {
     @GetMapping("")
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> allBooks = bookService.findAll();
-        if (allBooks == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else if (allBooks.isEmpty()) return new ResponseEntity<>(allBooks, HttpStatus.NO_CONTENT);
-        else return new ResponseEntity<>(allBooks, HttpStatus.OK);
+        if (allBooks == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else if (allBooks.isEmpty())
+            return new ResponseEntity<>(allBooks, HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(allBooks, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBook(@PathVariable Long id) {
         Book book = bookService.findById(id);
-        if (book == null) {
+        if (book == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(book, HttpStatus.OK);
+
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     @GetMapping("/by-topic-id/{topicIds}")
@@ -46,10 +50,13 @@ public class BookController {
         List<Book> allBooksByTopicId = new ArrayList<>();
         for (Long topicId : topicIds) {
             List<Book> booksByTopicId = bookService.findByTopicsId(topicId);
-            if (!booksByTopicId.isEmpty()) allBooksByTopicId.addAll(booksByTopicId);
+            if (!booksByTopicId.isEmpty())
+                allBooksByTopicId.addAll(booksByTopicId);
         }
-        if (allBooksByTopicId.isEmpty()) return new ResponseEntity<>(allBooksByTopicId, HttpStatus.NO_CONTENT);
-        else return new ResponseEntity<>(allBooksByTopicId, HttpStatus.OK);
+        if (allBooksByTopicId.isEmpty())
+            return new ResponseEntity<>(allBooksByTopicId, HttpStatus.NO_CONTENT);
+
+        return new ResponseEntity<>(allBooksByTopicId, HttpStatus.OK);
     }
 
     @GetMapping("/by-author-id/{authorIds}")
@@ -59,9 +66,10 @@ public class BookController {
             List<Book> booksByAuthorId = bookService.findByAuthorsId(authorId);
             if (!booksByAuthorId.isEmpty()) allBooksByAuthorId.addAll(booksByAuthorId);
         }
-        if (allBooksByAuthorId.isEmpty()) return new ResponseEntity<>(allBooksByAuthorId, HttpStatus.NO_CONTENT);
+        if (allBooksByAuthorId.isEmpty())
+            return new ResponseEntity<>(allBooksByAuthorId, HttpStatus.NO_CONTENT);
 
-        else return new ResponseEntity<>(allBooksByAuthorId, HttpStatus.OK);
+        return new ResponseEntity<>(allBooksByAuthorId, HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -73,12 +81,12 @@ public class BookController {
             errors.addAllErrors(bindingResult);
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
-        } else {
-            bookService.save(book);
-            headers.setLocation(uriComponentsBuilder.path("/books/{id}").
-                    buildAndExpand(book.getId()).toUri());
-            return new ResponseEntity<>(book, headers, HttpStatus.CREATED);
         }
+
+        bookService.save(book);
+        headers.setLocation(uriComponentsBuilder.path("/books/{id}").buildAndExpand(book.getId()).toUri());
+        return new ResponseEntity<>(book, headers, HttpStatus.CREATED);
+
     }
 
     @PutMapping("/{id}")
@@ -92,7 +100,8 @@ public class BookController {
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-        if (currentBook == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (currentBook == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         bookService.update(book);
         return new ResponseEntity<>(book, HttpStatus.NO_CONTENT);
@@ -101,10 +110,11 @@ public class BookController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Book> deleteBook(@PathVariable("id") Long id) {
         Book bookToDelete = bookService.findById(id);
-        if (bookToDelete == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else {
-            bookService.delete(id);
-            return new ResponseEntity<>(bookToDelete, HttpStatus.NO_CONTENT);
-        }
+        if (bookToDelete == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        bookService.delete(id);
+        return new ResponseEntity<>(bookToDelete, HttpStatus.NO_CONTENT);
+
     }
 }

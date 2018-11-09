@@ -28,72 +28,66 @@ public class AuthorController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Author>> getAllAuthors(){
+    public ResponseEntity<List<Author>> getAllAuthors() {
         List<Author> allAuthors = authorService.findAll();
-        if(allAuthors == null){
+        if (allAuthors == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else if(allAuthors.isEmpty()){
+        else if (allAuthors.isEmpty())
             return new ResponseEntity<>(allAuthors, HttpStatus.NO_CONTENT);
-        }
         else return new ResponseEntity<>(allAuthors, HttpStatus.OK);
     }
 
-    @GetMapping ("/{id}")
-    public ResponseEntity<Author> getAuthor(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Author> getAuthor(@PathVariable Long id) {
         Author author = authorService.findById(id);
-        if(author == null){
+        if (author == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         else return new ResponseEntity<>(author, HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<Author> saveAuthor(@RequestBody @Valid Author author, BindingResult bindingResult,
-                                         UriComponentsBuilder uriComponentsBuilder){
+                                             UriComponentsBuilder uriComponentsBuilder) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
-        if(bindingResult.hasErrors() || (author == null)){
+        if (bindingResult.hasErrors() || (author == null)) {
             errors.addAllErrors(bindingResult);
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-        else{
-            authorService.save(author);
-            headers.setLocation(uriComponentsBuilder.path("/authors/{id}").
-                    buildAndExpand(author.getId()).toUri());
-            return new ResponseEntity<>(author, headers, HttpStatus.CREATED);
-        }
+        authorService.save(author);
+        headers.setLocation(uriComponentsBuilder.path("/authors/{id}").
+                buildAndExpand(author.getId()).toUri());
+        return new ResponseEntity<>(author, headers, HttpStatus.CREATED);
     }
 
-    @PutMapping ("/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable ("id") Long id, @RequestBody @Valid Author author,
-                                               BindingResult bindingResult){
+    @PutMapping("/{id}")
+    public ResponseEntity<Author> updateAuthor(@PathVariable("id") Long id, @RequestBody @Valid Author author,
+                                               BindingResult bindingResult) {
         Author currentAuthor = authorService.findById(id);
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
-        if(bindingResult.hasErrors() || (author == null)){
+        if (bindingResult.hasErrors() || (author == null)) {
             errors.addAllErrors(bindingResult);
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-        if(currentAuthor == null){
+        if (currentAuthor == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
         authorService.update(author);
         return new ResponseEntity<>(author, HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping ("/{id}")
-    public ResponseEntity<Author> deleteAuthor(@PathVariable ("id") Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Author> deleteAuthor(@PathVariable("id") Long id) {
         Author authorToDelete = authorService.findById(id);
-        if(authorToDelete == null){
+        if (authorToDelete == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
-            authorService.delete(id);
-            return new ResponseEntity<>(authorToDelete, HttpStatus.NO_CONTENT);
-        }
+
+        authorService.delete(id);
+        return new ResponseEntity<>(authorToDelete, HttpStatus.NO_CONTENT);
+
     }
 
 }
