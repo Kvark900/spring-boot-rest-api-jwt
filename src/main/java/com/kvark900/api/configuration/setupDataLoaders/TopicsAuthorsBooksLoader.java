@@ -1,6 +1,5 @@
 package com.kvark900.api.configuration.setupDataLoaders;
 
-import com.kvark900.api.configuration.security.user.*;
 import com.kvark900.api.model.Author;
 import com.kvark900.api.model.Book;
 import com.kvark900.api.model.Topic;
@@ -13,7 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Keno&Kemo on 03.03.2018..
@@ -154,7 +154,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
     }
 
     @Transactional
-    private Author createAuthorIfNotFound(String name, String surname) {
+    Author createAuthorIfNotFound(String name, String surname) {
         Author author = authorService.findByNameAndSurname(name, surname);
         if (author == null) {
             author = new Author(name, surname);
@@ -164,7 +164,7 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
     }
 
     @Transactional
-    private Topic createTopicIfNotFound(String name, String description) {
+    Topic createTopicIfNotFound(String name, String description) {
         Topic topic = topicService.findByName(name);
         if (topic == null) {
             topic = new Topic(name, description);
@@ -174,9 +174,9 @@ public class TopicsAuthorsBooksLoader implements ApplicationListener<ContextRefr
     }
 
     @Transactional
-    private void createBookIfNotFound (String title, Set<Author> authors,
-                                       String yearOfPublication, String description,
-                                       Set<Topic> topics, BigDecimal price) {
+    void createBookIfNotFound(String title, Set<Author> authors,
+                              String yearOfPublication, String description,
+                              Set<Topic> topics, BigDecimal price) {
         Book book = bookService.findByTitle(title);
         if (book == null) {
             book = new Book();
