@@ -1,6 +1,8 @@
 package com.kvark900.api.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -19,7 +21,7 @@ public class Topic {
     @Lob
     private String description;
 
-//    @JsonIgnore
+    @JsonBackReference
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "topics")
     private Set<Book> books = new HashSet<>();
 

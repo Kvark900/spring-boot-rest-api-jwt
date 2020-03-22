@@ -45,12 +45,12 @@ public class TestAuthorController {
 
 
     @Before
-    public void setup(){
+    public void setup() {
         JacksonTester.initFields(this, new ObjectMapper());
     }
 
     @Test
-    public void testGetAllAuthorsWhenExist() throws Exception{
+    public void testGetAllAuthorsWhenExist() throws Exception {
         Author author = new Author();
         author.setName("Richard");
         author.setSurname("Feynman");
@@ -63,8 +63,9 @@ public class TestAuthorController {
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk());
     }
+
     @Test
-    public void testGetAllAuthorsWhenNotFound() throws Exception{
+    public void testGetAllAuthorsWhenNotFound() throws Exception {
         List<Author> allAuthors = null;
 
         given(authorService.findAll()).willReturn(allAuthors);
@@ -75,7 +76,7 @@ public class TestAuthorController {
     }
 
     @Test
-    public void testGetAllAuthorsWhenEmpty() throws Exception{
+    public void testGetAllAuthorsWhenEmpty() throws Exception {
         List<Author> allAuthors = new ArrayList<>();
 
         given(authorService.findAll()).willReturn(allAuthors);
@@ -87,10 +88,10 @@ public class TestAuthorController {
 
 
     @Test
-    public void testSaveAuthor() throws Exception{
+    public void testSaveAuthor() throws Exception {
         // when
         MockHttpServletResponse response = mockMvc.perform(
-                post("/authors").contentType(MediaType. APPLICATION_JSON_UTF8_VALUE).content(
+                post("/authors").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(
                         authorJacksonTester.write(new Author("Richard", "Feynman")).getJson()
                 )).andReturn().getResponse();
 

@@ -1,5 +1,6 @@
 package com.kvark900.api.controller;
 
+import com.kvark900.api.exceptions.BindingErrorsResponse;
 import com.kvark900.api.model.Book;
 import com.kvark900.api.service.BookService;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("Duplicates")
 @RestController
@@ -38,11 +40,9 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBook(@PathVariable Long id) {
-        Book book = bookService.findById(id);
-        if (book == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        return new ResponseEntity<>(book, HttpStatus.OK);
+        return bookService.findById(id)
+                .map(book -> new ResponseEntity<>(book, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/by-topic-id/{topicIds}")
@@ -55,7 +55,6 @@ public class BookController {
         }
         if (allBooksByTopicId.isEmpty())
             return new ResponseEntity<>(allBooksByTopicId, HttpStatus.NO_CONTENT);
-
         return new ResponseEntity<>(allBooksByTopicId, HttpStatus.OK);
     }
 
@@ -92,7 +91,7 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable("id") Long id, @RequestBody @Valid Book book,
                                            BindingResult bindingResult) {
-        Book currentBook = bookService.findById(id);
+        Optional<Book> currentBook = bookService.findById(id);
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
         if (bindingResult.hasErrors() || (book == null)) {
@@ -100,7 +99,7 @@ public class BookController {
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-        if (currentBook == null)
+        if (!currentBook.isPresent())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         bookService.update(book);
@@ -109,12 +108,11 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Book> deleteBook(@PathVariable("id") Long id) {
-        Book bookToDelete = bookService.findById(id);
-        if (bookToDelete == null)
+        Optional<Book> bookToDelete = bookService.findById(id);
+        if (!bookToDelete.isPresent())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
         bookService.delete(id);
-        return new ResponseEntity<>(bookToDelete, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(bookToDelete.get(), HttpStatus.NO_CONTENT);
 
     }
 }

@@ -1,4 +1,4 @@
-package com.kvark900.api.configuration.setupDataLoaders;
+package com.kvark900.api.configuration.dataLoaders;
 
 import com.kvark900.api.model.Author;
 import com.kvark900.api.model.Book;

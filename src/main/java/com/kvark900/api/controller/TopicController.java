@@ -1,5 +1,6 @@
 package com.kvark900.api.controller;
 
+import com.kvark900.api.exceptions.BindingErrorsResponse;
 import com.kvark900.api.model.Topic;
 import com.kvark900.api.service.TopicService;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("Duplicates")
 @RestController
@@ -35,10 +37,10 @@ public class TopicController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Topic> getTopic(@PathVariable Long id) {
-        Topic topic = topicService.findById(id);
-        if (topic == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(topic, HttpStatus.OK);
+        return topicService
+                .findById(id)
+                .map(topic -> new ResponseEntity<>(topic, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("")
@@ -51,28 +53,25 @@ public class TopicController {
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-
         topicService.save(topic);
-        headers.setLocation(uriComponentsBuilder.path("/books/{id}").
-                buildAndExpand(topic.getId()).toUri());
+        headers.setLocation(uriComponentsBuilder.path("/books/{id}").buildAndExpand(topic.getId()).toUri());
         return new ResponseEntity<>(topic, headers, HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Topic> deleteTopic(@PathVariable Long id) {
-        Topic topicToDelete = topicService.findById(id);
-        if (topicToDelete == null) {
+        Optional<Topic> topicToDelete = topicService.findById(id);
+        if (!topicToDelete.isPresent())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         topicService.delete(id);
-        return new ResponseEntity<>(topicToDelete, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(topicToDelete.get(), HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Topic> updateTopic(@PathVariable Long id, @RequestBody @Valid Topic topic,
                                              BindingResult bindingResult) {
-        Topic currentTopic = topicService.findById(id);
+        Optional<Topic> currentTopic = topicService.findById(id);
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
         if (bindingResult.hasErrors() || (topic == null)) {
@@ -80,7 +79,7 @@ public class TopicController {
             headers.add("errors", errors.toJSON());
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
-        if (currentTopic == null)
+        if (!currentTopic.isPresent())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         topicService.update(topic);
         return new ResponseEntity<>(topic, HttpStatus.NO_CONTENT);

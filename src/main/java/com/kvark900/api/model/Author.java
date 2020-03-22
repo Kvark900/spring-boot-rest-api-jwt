@@ -1,5 +1,7 @@
 package com.kvark900.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -18,9 +20,9 @@ public class Author {
     @NotNull
     private String surname;
 
-    //@NotNull
-//    @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "authors")
+    @JsonBackReference
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 
 

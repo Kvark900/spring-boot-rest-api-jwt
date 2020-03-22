@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,8 +24,8 @@ public class TopicService {
         return topicRepository.findAll();
     }
 
-    public Topic findById(Long id){
-        return topicRepository.findOne(id);
+    public Optional<Topic> findById(Long id){
+        return topicRepository.findById(id);
     }
 
     public Topic findByName (String name){return topicRepository.findByNameAllIgnoreCase(name);}
@@ -34,7 +35,7 @@ public class TopicService {
     }
 
     public void delete(Long id){
-        topicRepository.delete(id);
+        topicRepository.deleteById(id);
     }
 
     public void update (Topic topic){

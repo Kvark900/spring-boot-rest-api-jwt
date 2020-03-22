@@ -3,6 +3,7 @@ package com.kvark900.api.configuration.security.user;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoleService {
@@ -12,22 +13,23 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-
-    public List<Role> findAll(){return roleRepository.findAll();}
+    public List<Role> findAll() {
+        return roleRepository.findAll();
+    }
 
     public Role findByName(RoleName name) {
         return roleRepository.findByName(name);
     }
 
-    public boolean existsRoleByName (RoleName name){
+    public boolean roleExists(RoleName name) {
         return roleRepository.existsRoleByName(name);
     }
 
-    public Role findById(Long id) {return roleRepository.findById(id);}
+    public Optional<Role> findById(Long id) {
+        return roleRepository.findById(id);
+    }
 
     public void save(Role role) {
     }
-
-
 
 }

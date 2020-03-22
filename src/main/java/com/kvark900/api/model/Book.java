@@ -1,23 +1,26 @@
 package com.kvark900.api.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Book {
+public class Book implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
     @NotNull
     private String title;
 
+    @JsonManagedReference
     @NotNull
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
@@ -28,8 +31,10 @@ public class Book {
     @Lob
     private String description;
 
+    @JsonManagedReference
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
-    @ManyToMany(cascade = CascadeType.PERSIST, targetEntity = Topic.class)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, targetEntity = Topic.class)
     @JoinTable(name = "book_topic",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "topic_id"))

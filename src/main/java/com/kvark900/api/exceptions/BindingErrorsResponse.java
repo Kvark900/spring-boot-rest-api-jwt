@@ -1,4 +1,4 @@
-package com.kvark900.api.controller;
+package com.kvark900.api.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -16,18 +16,6 @@ import java.util.List;
 
 public class BindingErrorsResponse {
     private List<BindingError> bindingErrors = new ArrayList<>();
-
-    public List<BindingError> getBindingErrors() {
-        return bindingErrors;
-    }
-
-    public void setBindingErrors(List<BindingError> bindingErrors) {
-        this.bindingErrors = bindingErrors;
-    }
-
-    public void addError(BindingError bindingError) {
-        this.bindingErrors.add(bindingError);
-    }
 
     public void addAllErrors(BindingResult bindingResult) {
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -51,6 +39,19 @@ public class BindingErrorsResponse {
         }
         return errorsAsJSON;
     }
+
+    public List<BindingError> getBindingErrors() {
+        return bindingErrors;
+    }
+
+    public void setBindingErrors(List<BindingError> bindingErrors) {
+        this.bindingErrors = bindingErrors;
+    }
+
+    public void addError(BindingError bindingError) {
+        this.bindingErrors.add(bindingError);
+    }
+
 
     @Override
     public String toString() {

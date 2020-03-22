@@ -1,0 +1,33 @@
+###
+GET http://localhost:8080/authors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4NTQ4MTgzOSwiaWF0IjoxNTg0ODc3MDM5fQ.NwFdUKJqmyAvkLvX5g90Q-d1eL4i3lHOR0oK9SRDjwdI0i5I9G5D3T-P3grvteiCatZ3672Gd9Ojoq5hvJDJPA
+
+###
+GET http://localhost:8080/books
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4NTQ4MTgzOSwiaWF0IjoxNTg0ODc3MDM5fQ.NwFdUKJqmyAvkLvX5g90Q-d1eL4i3lHOR0oK9SRDjwdI0i5I9G5D3T-P3grvteiCatZ3672Gd9Ojoq5hvJDJPA
+
+
+### Bad credentials
+POST http://localhost:8080/auth
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin1"
+}
+
+###
+
+### Succces
+POST http://localhost:8080/auth
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Keno&Kemo on 17.12.2017..
@@ -25,12 +26,13 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
+
     public List<Author> findAll (){
         return authorRepository.findAll();
     }
 
-    public Author findById(Long id){
-        return authorRepository.findOne(id);
+    public Optional<Author> findById(Long id){
+        return authorRepository.findById(id);
     }
 
     public Author findByNameAndSurname(String name, String surname){
@@ -46,7 +48,7 @@ public class AuthorService {
     }
 
     public void delete(Long id){
-        authorRepository.delete(id);
+        authorRepository.deleteById(id);
     }
 
 
